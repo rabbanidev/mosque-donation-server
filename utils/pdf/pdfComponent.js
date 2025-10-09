@@ -1,22 +1,150 @@
 import { itemsTotalAmount } from "../totalAmount.js";
 
-const generateHeader = (doc, name, detailsName, address, email, contact) => {
+// const generateHeader = (
+//   doc,
+//   name,
+//   detailsName,
+//   address,
+//   email,
+//   contact,
+//   address2 = "",
+//   website = "",
+//   charityNumber = ""
+// ) => {
+//   doc.image(`./others/allLogo/${name}.png`, 50, 50, { width: 60 });
+
+//   const rightX = 50;
+//   const startY = 50;
+
+//   doc
+//     .fontSize(20)
+//     .fillColor("#000")
+//     .text(detailsName, rightX, startY, {
+//       align: "right",
+//       width: 500,
+//     })
+
+//     .fontSize(13)
+//     .text(address, rightX, startY + 22, {
+//       align: "right",
+//       width: 500,
+//     })
+//     .fontSize(11)
+//     .text(address2, rightX, startY + 38, {
+//       align: "right",
+//       width: 500,
+//     })
+
+//     .fontSize(10)
+//     .fillColor("#0000FF")
+//     .text(`| ${website}`, rightX, startY + 53, {
+//       align: "right",
+//       width: 500,
+//     })
+//     .fillColor("#0000FF")
+//     .text(`| Email: ${email} `, rightX - 97, startY + 53, {
+//       align: "right",
+//       width: 500,
+//     })
+//     .fillColor("#0000FF")
+//     .text(`Ph: ${contact}`, rightX - 247, startY + 53, {
+//       align: "right",
+//       width: 500,
+//     })
+
+//     .fillColor("#000")
+//     .text(
+//       `CHARITY REGISTRATION NUMBER: ${charityNumber}`,
+//       rightX,
+//       startY + 67,
+//       {
+//         align: "right",
+//         width: 500,
+//       }
+//     );
+// };
+
+const generateHeader = (
+  doc,
+  name,
+  detailsName,
+  address,
+  email,
+  contact,
+  address2,
+  website,
+  charityNumber
+  // address2 = address,
+  // website = "http://localhost:8002",
+  // charityNumber = "CC-21321"
+) => {
+  // Logo section
+  doc.image(`./others/allLogo/${name}.png`, 50, 50, { width: 60 });
+
+  const rightX = 50;
+  let currentY = 50;
+
+  // Organization Name
   doc
-    .image(`./others/allLogo/${name}.png`, 50, 65, { width: 40 })
-    .fontSize(16)
-    .text(detailsName, 200, 65, { align: "right" })
-    .fontSize(9)
-    .text(address, 200, 85, {
+    .fontSize(20)
+    .font("Helvetica-Bold")
+    .fillColor("#2c3e50")
+    .text(detailsName, rightX, currentY, {
       align: "right",
-    })
-    .text("Email: ", 241, 98, {
-      align: "left",
-    })
-    .fillColor("#0000FF")
-    .text(email, 268, 98, { align: "left" })
-    .fillColor("#000")
-    .text(`Contact Number: ${contact}`, 330, 98, { align: "right" })
-    .moveDown();
+      width: 500,
+    });
+
+  currentY += 25;
+
+  // Address section
+  doc
+    .fontSize(13)
+    .font("Helvetica")
+    .fillColor("#34495e")
+    .text(address, rightX, currentY, {
+      align: "right",
+      width: 500,
+    });
+
+  // Conditional address line 2
+  if (address2) {
+    currentY += 16;
+    doc.fontSize(11).text(address2, rightX, currentY, {
+      align: "right",
+      width: 500,
+    });
+  }
+
+  // Contact information section - Horizontal layout on right side
+  currentY += 16;
+
+  doc.fontSize(10).fillColor("#2980b9").font("Helvetica");
+
+  let contactText = `Ph: ${contact} | Email: ${email}`;
+
+  if (website) {
+    contactText += ` | ${website}`;
+  }
+
+  doc.text(contactText, rightX, currentY, {
+    align: "right",
+    width: 500,
+  });
+
+  currentY += 14;
+
+  // Charity number (conditional)
+  if (charityNumber) {
+    doc
+      .fontSize(9)
+      .font("Helvetica-Bold")
+      .fillColor("#7f8c8d")
+      .text(`CHARITY REGISTRATION NUMBER: ${charityNumber}`, rightX, currentY, {
+        align: "right",
+        width: 500,
+      });
+    currentY += 12;
+  }
 };
 
 const receiptNumber = (doc, receiptId, tId, date, time) => {

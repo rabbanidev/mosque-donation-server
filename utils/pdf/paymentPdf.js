@@ -20,6 +20,9 @@ const paymentPDF = (payment, totalPayment, header) => {
     contact_number,
     mosjid_details_name,
     mosjid_name,
+    mosjid_address2,
+    website,
+    charityNumber,
   } = header;
 
   const receiptId = receiptID(totalPayment);
@@ -44,7 +47,10 @@ const paymentPDF = (payment, totalPayment, header) => {
     mosjid_details_name,
     mosjid_address,
     email_address,
-    contact_number
+    contact_number,
+    mosjid_address2 || "",
+    website || "",
+    charityNumber || ""
   );
   receiptNumber(doc, receiptId, referenceId, pdfDate, pdfTime);
   customerInformation(doc, email, contactNumber);
